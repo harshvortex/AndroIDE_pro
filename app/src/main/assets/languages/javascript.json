@@ -1,0 +1,12 @@
+
+{
+  "name": "JavaScript",
+  "extensions": ["js", "jsx", "ts", "tsx"],
+  "rules": [
+    { "pattern": "\\b(break|case|catch|class|const|continue|debugger|default|delete|do|else|export|extends|finally|for|function|if|import|in|instanceof|new|return|super|switch|this|throw|try|typeof|var|void|while|with|yield|await|async|let|static|enum|implements|package|protected|private|public|interface)\\b", "token": "keyword" },
+    { "pattern": "\\b(String|Number|Boolean|Array|Object|Symbol|BigInt|Promise|Date|RegExp|Error|Map|Set|WeakMap|WeakSet|window|document|console|globalThis)\\b", "token": "type" },
+    { "pattern": "(\".*?\"|'.*?'|`.*?`)", "token": "string" },
+    { "pattern": "//.*|/\\*(?:.|[\\n\\r])*?\\*/", "token": "comment" },
+    { "pattern": "\\b\\d+([_\\d]*\\d+)?(n)?\\b", "token": "number" }
+  ]
+}

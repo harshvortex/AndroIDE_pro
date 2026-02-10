@@ -1,0 +1,27 @@
+
+{
+  "name": "Solarized Dark",
+  "isDark": true,
+  "colors": {
+    "ui": {
+      "background": "#002b36",
+      "sidebar": "#073642",
+      "activityBar": "#00212b",
+      "accent": "#268bd2",
+      "text": "#839496",
+      "selection": "#073642"
+    },
+    "syntax": {
+      "keyword": "#859900",
+      "type": "#b58900",
+      "string": "#2aa198",
+      "comment": "#586e75",
+      "number": "#d33682",
+      "annotation": "#cb4b16",
+      "literal": "#d33682",
+      "tag": "#268bd2",
+      "attribute": "#2aa198",
+      "error": "#dc322f"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+
+{
+  "name": "Python",
+  "extensions": ["py"],
+  "rules": [
+    { "pattern": "\\b(and|as|assert|async|await|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield)\\b", "token": "keyword" },
+    { "pattern": "\\b(bool|dict|float|int|list|set|str|tuple|type|object|None|True|False)\\b", "token": "type" },
+    { "pattern": "(\".*?\"|'.*?')", "token": "string" },
+    { "pattern": "#.*", "token": "comment" },
+    { "pattern": "\\b\\d+([_\\d]*\\d+)?\\b", "token": "number" },
+    { "pattern": "@\\w+", "token": "annotation" }
+  ]
+}

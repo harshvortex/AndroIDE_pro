@@ -1,0 +1,27 @@
+
+{
+  "name": "Light Clean",
+  "isDark": false,
+  "colors": {
+    "ui": {
+      "background": "#F5F5F5",
+      "sidebar": "#EBEBEB",
+      "activityBar": "#D4D4D4",
+      "accent": "#007ACC",
+      "text": "#333333",
+      "selection": "#ADD6FF"
+    },
+    "syntax": {
+      "keyword": "#0000FF",
+      "type": "#267F99",
+      "string": "#A31515",
+      "comment": "#008000",
+      "number": "#098658",
+      "annotation": "#795E26",
+      "literal": "#098658",
+      "tag": "#800000",
+      "attribute": "#FF0000",
+      "error": "#CD3131"
+    }
+  }
+}

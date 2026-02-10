@@ -1,0 +1,13 @@
+
+{
+  "name": "Kotlin",
+  "extensions": ["kt", "kts"],
+  "rules": [
+    { "pattern": "\\b(package|import|public|private|protected|class|interface|fun|val|var|if|else|for|while|return|when|is|in|as|try|catch|finally|throw|new|this|super|break|continue|object|companion|typealias|init|constructor|get|set|it|field|by|where|actual|expect|inline|external|tailrec|operator|infix|suspend|external|out|reified)\\b", "token": "keyword" },
+    { "pattern": "\\b(String|Int|Long|Float|Double|Boolean|Char|Any|Unit|Nothing|List|Set|Map|Array|Byte|Short|Number)\\b", "token": "type" },
+    { "pattern": "\".*?\"", "token": "string" },
+    { "pattern": "//.*|/\\*(?:.|[\\n\\r])*?\\*/", "token": "comment" },
+    { "pattern": "\\b\\d+([_\\d]*\\d+)?([fFLl])?\\b", "token": "number" },
+    { "pattern": "@\\w+", "token": "annotation" }
+  ]
+}

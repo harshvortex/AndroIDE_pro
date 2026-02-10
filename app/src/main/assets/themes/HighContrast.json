@@ -1,0 +1,27 @@
+
+{
+  "name": "High Contrast",
+  "isDark": true,
+  "colors": {
+    "ui": {
+      "background": "#000000",
+      "sidebar": "#000000",
+      "activityBar": "#000000",
+      "accent": "#00A8FF",
+      "text": "#FFFFFF",
+      "selection": "#0058A3"
+    },
+    "syntax": {
+      "keyword": "#00A8FF",
+      "type": "#2EFFB8",
+      "string": "#FFB800",
+      "comment": "#A0A0A0",
+      "number": "#FF5C5C",
+      "annotation": "#E5FF00",
+      "literal": "#FF5C5C",
+      "tag": "#00A8FF",
+      "attribute": "#2EFFB8",
+      "error": "#FF0000"
+    }
+  }
+}

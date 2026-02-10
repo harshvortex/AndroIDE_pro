@@ -1,0 +1,27 @@
+
+{
+  "name": "Monokai",
+  "isDark": true,
+  "colors": {
+    "ui": {
+      "background": "#272822",
+      "sidebar": "#272822",
+      "activityBar": "#3E3D32",
+      "accent": "#FD971F",
+      "text": "#F8F8F2",
+      "selection": "#49483E"
+    },
+    "syntax": {
+      "keyword": "#F92672",
+      "type": "#66D9EF",
+      "string": "#E6DB74",
+      "comment": "#75715E",
+      "number": "#AE81FF",
+      "annotation": "#A6E22E",
+      "literal": "#AE81FF",
+      "tag": "#F92672",
+      "attribute": "#A6E22E",
+      "error": "#F92672"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+
+{
+  "name": "Java",
+  "extensions": ["java"],
+  "rules": [
+    { "pattern": "\\b(package|import|public|private|protected|class|interface|enum|extends|implements|static|final|abstract|native|transient|volatile|synchronized|strictfp|void|boolean|char|byte|short|int|long|float|double|if|else|switch|case|default|while|do|for|break|continue|return|throw|throws|try|catch|finally|new|this|super|instanceof|assert|null|true|false)\\b", "token": "keyword" },
+    { "pattern": "\\b(String|Integer|Long|Float|Double|Boolean|Character|Byte|Short|Object|Class|System|List|ArrayList|Map|HashMap|Set|HashSet)\\b", "token": "type" },
+    { "pattern": "\".*?\"", "token": "string" },
+    { "pattern": "//.*|/\\*(?:.|[\\n\\r])*?\\*/", "token": "comment" },
+    { "pattern": "\\b\\d+([_\\d]*\\d+)?([fFLl])?\\b", "token": "number" },
+    { "pattern": "@\\w+", "token": "annotation" }
+  ]
+}

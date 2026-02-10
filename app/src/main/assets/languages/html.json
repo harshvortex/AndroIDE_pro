@@ -1,0 +1,13 @@
+
+{
+  "name": "HTML",
+  "extensions": ["html", "htm"],
+  "rules": [
+    { "pattern": "<!DOCTYPE.*?>", "token": "comment" },
+    { "pattern": "<!--[\\s\\S]*?-->", "token": "comment" },
+    { "pattern": "<[\\s]*?[a-zA-Z0-9]+", "token": "tag" },
+    { "pattern": ">|/>", "token": "tag" },
+    { "pattern": "[a-zA-Z0-9-]+(?=\\=)", "token": "attribute" },
+    { "pattern": "=\".*?\"|='.*?'", "token": "string" }
+  ]
+}
