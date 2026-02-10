@@ -42,7 +42,7 @@ To build and run this project:
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/YOUR_USERNAME/AndroidIDE-Pro.git
+    git clone https://github.com/harshvortex/AndroIDE_pro.git
     ```
 2.  **Open in Android Studio**:
     -   Select "Open an existing Android Studio project" and navigate to the cloned directory.

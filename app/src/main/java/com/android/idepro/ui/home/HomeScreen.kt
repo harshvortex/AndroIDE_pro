@@ -35,6 +35,8 @@ import com.android.idepro.ui.editor.LanguageManager
 import com.android.idepro.execution.ExecutionEngine
 import com.android.idepro.execution.TaskManager
 import com.android.idepro.execution.Task
+import com.android.idepro.model.ProjectFile
+import com.android.idepro.ui.editor.LanguageResolver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -58,8 +60,8 @@ fun HomeScreen() {
 
 @Composable
 fun IDE_MainContent() {
-    var openFiles by remember { mutableStateOf(listOf<DocumentFile>()) }
-    var activeFile by remember { mutableStateOf<DocumentFile?>(null) }
+    var openFiles by remember { mutableStateOf(listOf<ProjectFile>()) }
+    var activeFile by remember { mutableStateOf<ProjectFile?>(null) }
     var activeFileContent by remember { mutableStateOf("") }
     var showTerminal by remember { mutableStateOf(false) }
     var terminalTab by remember { mutableStateOf("TERMINAL") }
@@ -88,7 +90,7 @@ fun IDE_MainContent() {
         if (activeFile != null) {
             delay(1000) // Wait for 1 second of inactivity before saving
             withContext(Dispatchers.IO) {
-                saveFileContent(context, activeFile!!, activeFileContent)
+                saveFileContent(context, activeFile!!.document, activeFileContent)
             }
         }
     }
@@ -150,12 +152,13 @@ fun IDE_MainContent() {
                     when (selectedActivity) {
                         "explorer" -> FileExplorer(
                             modifier = Modifier.fillMaxSize(),
-                            onFileSelected = { file ->
-                                if (!openFiles.contains(file)) {
+                            onFileSelected = { doc ->
+                                val file = ProjectFile(doc)
+                                if (openFiles.none { it.document.uri == doc.uri }) {
                                     openFiles = openFiles + file
                                 }
                                 activeFile = file
-                                activeFileContent = readFileContent(context, file)
+                                activeFileContent = readFileContent(context, doc)
                             }
                         )
                         "search" -> SearchPanel()
@@ -177,13 +180,13 @@ fun IDE_MainContent() {
                         activeFile = activeFile,
                         onFileSelected = { file ->
                             activeFile = file
-                            activeFileContent = readFileContent(context, file)
+                            activeFileContent = readFileContent(context, file.document)
                         },
                         onFileClosed = { file ->
-                            openFiles = openFiles.filter { it != file }
-                            if (activeFile == file) {
+                            openFiles = openFiles.filter { it.document.uri != file.document.uri }
+                            if (activeFile?.document?.uri == file.document.uri) {
                                 activeFile = openFiles.lastOrNull()
-                                activeFileContent = activeFile?.let { readFileContent(context, it) } ?: ""
+                                activeFileContent = activeFile?.let { readFileContent(context, it.document) } ?: ""
                             }
                         }
                     )
@@ -197,7 +200,7 @@ fun IDE_MainContent() {
                                 CodeEditorView(
                                     code = activeFileContent,
                                     onCodeChanged = { activeFileContent = it },
-                                    extension = activeFile?.name?.substringAfterLast(".", "") ?: "kt",
+                                    extension = activeFile!!.extension,
                                     modifier = Modifier.fillMaxSize()
                                 )
                             } else {
@@ -400,7 +403,7 @@ fun SettingsPanel(isLearningMode: Boolean, onLearningModeToggle: (Boolean) -> Un
 }
 
 @Composable
-fun StatusBar(showTerminal: Boolean, onTerminalToggle: () -> Unit, activeFile: DocumentFile?, isLearningMode: Boolean) {
+fun StatusBar(showTerminal: Boolean, onTerminalToggle: () -> Unit, activeFile: ProjectFile?, isLearningMode: Boolean) {
     val theme = ThemeManager.currentTheme
     val accentColor = theme.colors.ui.accent.toComposeColor()
     val textColor = if (theme.isDark) Color.White else Color.Black
@@ -426,7 +429,7 @@ fun StatusBar(showTerminal: Boolean, onTerminalToggle: () -> Unit, activeFile: D
         if (activeFile != null) {
             Text("Ln 1, Col 1", color = textColor, style = MaterialTheme.typography.labelSmall)
             Spacer(modifier = Modifier.width(12.dp))
-            Text(activeFile.name?.substringAfterLast(".", "")?.uppercase() ?: "PLAIN TEXT", color = textColor, style = MaterialTheme.typography.labelSmall)
+            Text(activeFile.extension.uppercase().ifEmpty { "PLAIN TEXT" }, color = textColor, style = MaterialTheme.typography.labelSmall)
         }
     }
 }
@@ -728,7 +731,7 @@ fun ExtensionItem(name: String, author: String, version: String) {
 }
 
 @Composable
-fun Breadcrumbs(activeFile: DocumentFile?) {
+fun Breadcrumbs(activeFile: ProjectFile?) {
     val theme = ThemeManager.currentTheme
     Row(
         modifier = Modifier
@@ -815,15 +818,15 @@ fun WelcomeActionItem(icon: ImageVector, label: String, shortcut: String, onClic
 
 @Composable
 fun EditorTabs(
-    openFiles: List<DocumentFile>,
-    activeFile: DocumentFile?,
-    onFileSelected: (DocumentFile) -> Unit,
-    onFileClosed: (DocumentFile) -> Unit
+    openFiles: List<ProjectFile>,
+    activeFile: ProjectFile?,
+    onFileSelected: (ProjectFile) -> Unit,
+    onFileClosed: (ProjectFile) -> Unit
 ) {
     val theme = ThemeManager.currentTheme
     LazyRow(modifier = Modifier.fillMaxWidth().height(35.dp).background(theme.colors.ui.sidebar.toComposeColor())) {
         items(openFiles) { file ->
-            val isSelected = file == activeFile
+            val isSelected = file.document.uri == activeFile?.document?.uri
             Row(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -834,7 +837,7 @@ fun EditorTabs(
             ) {
                 Icon(Icons.Default.InsertDriveFile, null, modifier = Modifier.size(14.dp), tint = Color(0xFF519ABA))
                 Spacer(modifier = Modifier.width(6.dp))
-                Text(file.name ?: "Unknown", color = if (isSelected) theme.colors.ui.text.toComposeColor() else theme.colors.ui.text.toComposeColor().copy(alpha = 0.6f), style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp))
+                Text(file.name, color = if (isSelected) theme.colors.ui.text.toComposeColor() else theme.colors.ui.text.toComposeColor().copy(alpha = 0.6f), style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(Icons.Default.Close, "Close", modifier = Modifier.size(14.dp).clickable { onFileClosed(file) }, tint = if (isSelected) theme.colors.ui.text.toComposeColor() else Color.Transparent)
             }
